@@ -139,10 +139,14 @@ const palm = (R: THREE.Object3D, x: number, z: number, h: number, lean: number, 
   for (let k = 0; k < 9; k++) {
     const a = (k / 9) * Math.PI * 2 + seed, g = new THREE.Group();
     g.position.copy(top); g.rotation.y = a;
-    for (let j = 0; j < 3; j++) {
-      const len = 0.95, f = new THREE.Mesh(new THREE.BoxGeometry(0.42 - j * 0.1, 0.05, len), j % 2 ? leaf2 : leaf);
-      const droop = 0.25 + j * 0.45;
-      f.position.set(0, -[0, 0.22, 0.75][j] , [0.45, 1.3, 2.05][j]); f.rotation.x = droop;
+    // a frond = 4 chained slats curving down from the crown
+    let fy = 0, fz = 0.1, ang = -0.35 + 0.12 * Math.sin(seed * 3 + k);
+    for (let j = 0; j < 4; j++) {
+      const len = 0.75, w = 0.46 - j * 0.09;
+      const f = new THREE.Mesh(new THREE.BoxGeometry(w, 0.04, len), j % 2 ? leaf2 : leaf);
+      f.rotation.x = ang;
+      f.position.set(0, fy - Math.sin(ang) * len / 2, fz + Math.cos(ang) * len / 2);
+      fy -= Math.sin(ang) * len; fz += Math.cos(ang) * len; ang += 0.32;
       f.castShadow = true; g.add(f);
     }
     R.add(g);
@@ -333,7 +337,7 @@ export class World {
     gb.visible = s.id === 2;
     if (gb.visible) {
       const pk = f >= 243 ? 1 + 0.12 * (1 - pop((f - 243) / 12)) : 1;
-      gb.position.set(ROOM_X + 0.1 + 0.02 * kidHand, 0.62 + 0.28 * kidHand + 0.03 * Math.sin(t * 9) * (f >= 243 ? 1 : 0), -1.08);
+      gb.position.set(ROOM_X + 0.15 - 0.14 * kidHand, 0.5 + 0.08 * kidHand + 0.025 * Math.sin(t * 9) * (f >= 243 ? 1 : 0), -1.08);
       gb.rotation.set(0, Math.atan2(cam.position.x - gb.position.x, cam.position.z - gb.position.z), -0.12 + 0.12 * kidHand);
       gb.scale.setScalar(pk);
     }
