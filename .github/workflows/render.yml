@@ -2,8 +2,9 @@ name: render
 on:
   workflow_dispatch:
     inputs:
+      comp: {description: "Композиция", default: "GtaShort"}
       start: {description: "Первый кадр (30 = 1 секунда)", default: "0"}
-      frames: {description: "Сколько кадров рендерить", default: "150"}
+      frames: {description: "Сколько кадров рендерить", default: "312"}
       chunk: {description: "Кадров на один сервер", default: "8"}
       scale: {description: "Масштаб (0.6667 = 720x1280, 1 = 1080x1920)", default: "0.6667"}
 
@@ -37,7 +38,7 @@ jobs:
       - run: npx remotion browser ensure
       - run: |
           echo "cores: $(nproc)"
-          npx remotion render src/index.ts BridgeShort out/part.mp4 --frames=${{ matrix.part }} \
+          npx remotion render src/index.ts ${{ inputs.comp }} out/part.mp4 --frames=${{ matrix.part }} \
             --scale=${{ inputs.scale }} --gl=swangle --timeout=900000 --codec=h264 --crf=18 \
             --concurrency=$(nproc) --muted
           mkdir -p parts && start=$(echo "${{ matrix.part }}" | cut -d- -f1)
