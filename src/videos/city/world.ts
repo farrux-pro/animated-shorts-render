@@ -143,9 +143,9 @@ export class World {
     let i = 0;
     for (const s of [-1, 1]) for (let z = 60; z >= -150; z -= 13) {
       if (s > 0 && Math.abs(z - -43) < 7) continue; // the store slot
-      add(inst(kit, bnames[i++ % bnames.length], s * 15, z, s > 0 ? -Math.PI / 2 : Math.PI / 2, { len: 12 }));
+      add(inst(kit, bnames[i++ % bnames.length], s * 20, z, s > 0 ? -Math.PI / 2 : Math.PI / 2, { len: 12 }));
     }
-    const store = add(inst(kit, "bc", 15, -43, -Math.PI / 2, { len: 13 }));
+    const store = add(inst(kit, "bc", 20, -43, -Math.PI / 2, { len: 13 }));
     for (let z = 52; z >= -150; z -= 12) for (const s of [-1, 1]) {
       add(inst(kit, (z / 12) % 2 ? "palm" : "palmBend", s * 7.6, z + (s > 0 ? 0 : 6), s * 0.4, { h: 9 + ((z * 7) % 3) }));
     }
@@ -158,18 +158,18 @@ export class World {
     const bt = new THREE.CanvasTexture(bb); bt.colorSpace = THREE.SRGBColorSpace;
     const storeH = store ? new THREE.Box3().setFromObject(store).max.y : 12;
     const board = new THREE.Mesh(new THREE.PlaneGeometry(11, 4.7), new THREE.MeshBasicMaterial({ map: bt, color: new THREE.Color(1.6, 1.6, 1.6) }));
-    board.position.set(10.5, storeH + 3.2, -43); board.rotation.y = -Math.PI / 2; R.add(board);
+    board.position.set(13.2, storeH + 3.2, -43); board.rotation.y = -Math.PI / 2; R.add(board);
     const frame = new THREE.Mesh(new THREE.BoxGeometry(0.4, 5.2, 11.6), twoTone(new THREE.MeshLambertMaterial({ color: "#2a2236" })));
-    frame.position.set(10.75, storeH + 3.2, -43); frame.castShadow = true; R.add(frame);
-    for (const dz of [-4, 4]) { const p = new THREE.Mesh(new THREE.BoxGeometry(0.3, 3.2, 0.3), twoTone(new THREE.MeshLambertMaterial({ color: "#3a3a44" }))); p.position.set(11, storeH + 0.6, -43 + dz); R.add(p); }
+    frame.position.set(13.45, storeH + 3.2, -43); frame.castShadow = true; R.add(frame);
+    for (const dz of [-4, 4]) { const p = new THREE.Mesh(new THREE.BoxGeometry(0.3, 3.2, 0.3), twoTone(new THREE.MeshLambertMaterial({ color: "#3a3a44" }))); p.position.set(13.7, storeH + 0.6, -43 + dz); R.add(p); }
     this.taxi = add(inst(kit, "taxi", 2.4, 0, Math.PI, { len: 4.6 }));
     this.oncoming = add(inst(kit, "sport", -2.4, 0, 0, { len: 4.6 }));
     add(inst(kit, "sedan", 4.2, -26, Math.PI, { len: 4.6 })); add(inst(kit, "van", -4.2, -58, 0, { len: 5.2 }));
     // ---- office district ----
     const X = OFFICE_X;
-    add(inst(kit, "skya", X + 18, -4, -Math.PI / 2, { h: 46 })); add(inst(kit, "skyb", X + 18, -28, -Math.PI / 2, { h: 38 }));
-    add(inst(kit, "skyc", X + 18, 20, -Math.PI / 2, { h: 34 })); add(inst(kit, "skyd", X - 18, -10, Math.PI / 2, { h: 42 }));
-    add(inst(kit, "skye", X - 18, 16, Math.PI / 2, { h: 30 })); add(inst(kit, "skyb", X + 20, -60, -Math.PI / 2, { h: 50 }));
+    add(inst(kit, "skya", X + 25, -4, -Math.PI / 2, { h: 46 })); add(inst(kit, "skyb", X + 25, -28, -Math.PI / 2, { h: 38 }));
+    add(inst(kit, "skyc", X + 25, 20, -Math.PI / 2, { h: 34 })); add(inst(kit, "skyd", X - 25, -10, Math.PI / 2, { h: 42 }));
+    add(inst(kit, "skye", X - 25, 16, Math.PI / 2, { h: 30 })); add(inst(kit, "skyb", X + 27, -60, -Math.PI / 2, { h: 50 }));
     for (const [n, cz] of [["suv", -14], ["sedan", -20], ["police", 26], ["hatch", -32]] as const) add(inst(kit, n, X - 4.2, cz, 0, { len: 4.6 }));
     for (let z = 30; z >= -40; z -= 14) { add(inst(kit, "oak", X + 8.5, z + 7, 0, { h: 7 })); add(inst(kit, "lamp", X + 6.2, z, Math.PI, { h: 7 })); }
     for (let k = 0; k < 6; k++) { this.cards.push(new Card(R)); this.blobs.push(shadowBlob(R)); }
@@ -206,15 +206,15 @@ export class World {
     if (s.id === 1) {
       LOOKS.forEach((lk, i) => {
         const cheer = t > 1.66, jump = cheer ? Math.abs(Math.sin((t - 1.66) * 7 + i)) * 0.18 : 0;
-        ppl.push({ look: lk, x: 9.2 + (i % 2) * 0.6, z: -38.5 - i * 1.7, pose: { expr: cheer ? "laugh" : "grin", blink: blink(i), rh: cheer && i % 2 ? [150, -830] : undefined, bob: -jump * 60,
+        ppl.push({ look: lk, x: 10.2 + (i % 2) * 0.7, z: -37 - i * 1.6, pose: { expr: cheer ? "laugh" : "grin", blink: blink(i), rh: cheer && i % 2 ? [150, -830] : undefined, bob: -jump * 60,
           hold: i % 2 ? undefined : boxHold, lh: i % 2 ? undefined : [-88, -470], ...(i % 2 ? {} : { rh: [88, -470] }) } as Pose });
       });
     } else {
       const u = (f - s.a) / (s.b - s.a), turn = t >= 6.06;
       OFFICE.forEach((lk, i) => {
         const back = i === 2 && turn;
-        const z0 = 9 + i * 1.6 - (f - s.a) * 0.045, z = back ? z0 + (t - 6.06) * 1.6 * 2 : z0;
-        ppl.push({ look: lk, x: OFFICE_X + 8 + (i % 2 ? 0.9 : 0), z, mirror: back,
+        const z0 = 5 - i * 1.7 - (f - s.a) * 0.04, z = back ? z0 + (t - 6.06) * 1.3 : z0;
+        ppl.push({ look: lk, x: OFFICE_X + 7.5 + (i % 2 ? 0.9 : 0), z, mirror: back,
           pose: { expr: back ? "smug" : i === 4 ? "sad" : "neutral", blink: blink(i), walk: ((t * 1.6) + i * 0.3) % 1,
             ...(back ? { hold: boxHold, lh: [-88, -470], rh: [88, -470] } : {}) } as Pose });
       });
