@@ -171,7 +171,7 @@ export class World {
     add(inst(kit, "skyc", X + 25, 20, -Math.PI / 2, { h: 34 })); add(inst(kit, "skyd", X - 25, -10, Math.PI / 2, { h: 42 }));
     add(inst(kit, "skye", X - 25, 16, Math.PI / 2, { h: 30 })); add(inst(kit, "skyb", X + 27, -60, -Math.PI / 2, { h: 50 }));
     for (const [n, cz] of [["suv", -14], ["sedan", -20], ["police", 26], ["hatch", -32]] as const) add(inst(kit, n, X - 4.2, cz, 0, { len: 4.6 }));
-    for (let z = 30; z >= -40; z -= 14) { add(inst(kit, "oak", X + 8.5, z + 7, 0, { h: 7 })); add(inst(kit, "lamp", X + 6.2, z, Math.PI, { h: 7 })); }
+    for (let z = 30; z >= -40; z -= 14) { add(inst(kit, "oak", X + 10.5, z + 7, 0, { h: 7 })); if (z < -10) add(inst(kit, "lamp", X + 6.2, z, Math.PI, { h: 7 })); }
     for (let k = 0; k < 6; k++) { this.cards.push(new Card(R)); this.blobs.push(shadowBlob(R)); }
   }
 

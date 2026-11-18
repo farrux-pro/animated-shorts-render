@@ -22,15 +22,15 @@ export const camAt = (f: number): Cam => {
   const s = shotAt(f);
   if (s.id === 1) {
     const z = taxiZ(f), k = glide((f - 60) / 70);
-    const chasePos: V3 = [1.6, 2.4, z + 7.5], chaseLook: V3 = [2.4, 1.3, z - 12];
-    const cranePos: V3 = [-2.5, 6.5, -22], craneLook: V3 = [11, 5.5, -42];
+    const chasePos: V3 = [1.4, 3.0, z + 10.5], chaseLook: V3 = [2.4, 1.4, z - 12];
+    const cranePos: V3 = [3.5, 4.2, -29], craneLook: V3 = [10.5, 3.6, -41];
     return { pos: L(chasePos, cranePos, k), look: L(chaseLook, craneLook, k), fov: 50, roll: 0.03 * Math.sin(f / 30) * (1 - k) };
   }
   const u = (f - s.a) / (s.b - s.a);
-  return { pos: [OFFICE_X + 1 + 1.5 * u, 2.2 + 0.5 * u, 14 - 3 * glide(u)], look: [OFFICE_X + 8, 2.6, -4], fov: 46, roll: 0 };
+  return { pos: [OFFICE_X + 3 + 0.8 * u, 1.9 + 0.3 * u, 9.5 - 2 * glide(u)], look: [OFFICE_X + 8, 2.0, -4], fov: 46, roll: 0 };
 };
 export const dofAt = (f: number): { cInf: number; focus: V3 } => {
   const s = shotAt(f), c = camAt(f);
-  if (s.id === 1) return { cInf: 4, focus: f < 70 ? [0, 1, taxiZ(f)] : c.look };
+  if (s.id === 1) return { cInf: 2.5, focus: f < 70 ? [2.4, 1, taxiZ(f)] : [10.5, 1.5, -40] };
   return { cInf: 6, focus: [OFFICE_X + 7.5, 1.5, 1] };
 };
