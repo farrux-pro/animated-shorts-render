@@ -1,3 +1,6 @@
 node_modules/
 out/
 build/
+public/gta2d/
+public/bc/
+public/eco/
